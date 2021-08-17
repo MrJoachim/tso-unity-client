@@ -3,7 +3,15 @@ const path = require("path");
 const fs = require("fs");
 const fetch = require("node-fetch");
 const urlLib = require("url");
-const appPath = app.getPath("userData");
+const portable = true;
+var appPath = app.getPath("userData");
+
+if(portable){
+  appPath = path.join(app.getAppPath() + "/data");
+  app.setPath ('userData', appPath);
+  console.log(app.getPath("userData"));
+}
+
 
 function download(url, dest, cb) {
   fetch(url).then((response) => {
