@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const fetch = require("node-fetch");
 const urlLib = require("url");
-const portable = true;
+const portable = false;
 var appPath = app.getPath("userData");
 
 if(portable){
@@ -28,6 +28,7 @@ var server = "";
 function createWindow() {
   const mainWindow = new BrowserWindow({
     title: "TSO Unity Client",
+    // icon: "icon.ico",
     icon: path.join(app.getAppPath(), "icon.ico"),
     width: 800,
     height: 600,
@@ -35,17 +36,18 @@ function createWindow() {
     webPreferences: {
       contextIsolation: false,
       nodeIntegration: false,
+      // preload: "preload.js",
       preload: path.join(app.getAppPath(), "preload.js"),
     },
   });
-  mainWindow.loadURL(path.join(app.getAppPath(), "serverselector.html"));
-
+  mainWindow.loadFile("serverselector.html");
+  // mainWindow.loadURL(path.join(app.getAppPath(), "serverselector.html"));
   ipcMain.on("synchronous-message", (event, arg) => {
     console.log(mainWindow.webContents.getURL());
     event.returnValue = mainWindow.webContents.getURL();
   });
   ipcMain.on("redirectToGame", (event, arg) => {
-    mainWindow.loadURL(server + "/play");
+    mainWindow.loadFile(server + "/play");
   });
   ipcMain.on("loadLogin", (event) => {
     mainWindow.loadURL(
@@ -149,7 +151,8 @@ function createWindow() {
           );
         } else {
           fs.writeFileSync(path.join(appPath, "game.html"), html);
-          mainWindow.loadURL(path.join(appPath, "game.html"));
+          mainWindow.loadFile(path.join(appPath, "game.html"));
+          // mainWindow.loadURL(path.join(appPath, "game.html"));
         }
       });
 
