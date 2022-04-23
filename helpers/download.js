@@ -1,3 +1,5 @@
+const fetch = require("node-fetch");
+const fs = require("fs");
 
 function download(url, dest, cb) {
     fetch(url).then((response) => {

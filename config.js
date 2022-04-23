@@ -1,4 +1,4 @@
 module.exports.config = {
-    portable: true,
+    portable: false,
     collectibles: false,
 };

@@ -17,14 +17,16 @@ window.addEventListener("load", () => {
         url = url.slice(0, -1);
       }
 
-      var elem = document.createElement("div");
+      document.body.innerHTML = "";
+      document.body.removeAttribute("class");
+      var elem = document.body;
       elem.id = "overrideDiv";
-      elem.style.cssText =
-        "position: absolute;      width: 100vw;      height: 100vh;      opacity: 1;      z-index: 999999999999999999999999999;      background: white;";
-
-      elem.innerHTML = "<h1 style='font-size:32px;'>Loading...</h1>";
-
-      document.body.prepend(elem);
+      elem.style.cssText = "z-index:10000;position:absolute; background-color: #FEF3EA;min-width:100vw;height:100vh;max-width:100vw;        display:flex;        justify-content: center;        align-items: center;        flex:1;        height:100vh;        padding:0;        margin:0;      font-family: arial;";
+      var elemh1 = document.createElement("h1");
+      elemh1.style.cssText = "font-size:32px;text-align:center;";
+      elemh1.innerHTML = "Please wait while the game is loading."
+      elem.prepend(elemh1);
+      // document.body.prepend(elem);
 
       setTimeout(() => {
         ipcRenderer.sendSync("setServer", url);
@@ -39,14 +41,18 @@ window.addEventListener("DOMContentLoaded", () => {
   console.log(pathname);
   if (pathname.includes("homepage")) {
     if (document.getElementById("overrideDiv") == null) {
-      var elem = document.createElement("div");
+
+      document.body.innerHTML = "";
+      document.body.removeAttribute("class");
+      var elem = document.body;
       elem.id = "overrideDiv";
-      elem.style.cssText =
-        "position: absolute;      width: 100vw;      height: 100vh;      opacity: 1;      z-index: 999999999999999999999999999;      background: white;";
+      elem.style.cssText = "z-index:10000;position:absolute; background-color: #FEF3EA;min-width:100vw;height:100vh;max-width:100vw;        display:flex;        justify-content: center;        align-items: center;        flex:1;        height:100vh;        padding:0;        margin:0;      font-family: arial;";
+      var elemh1 = document.createElement("h1");
+      elemh1.style.cssText = "font-size:32px;text-align:center;";
+      elemh1.innerHTML = "Please wait while the game is loading."
+      elem.prepend(elemh1);
+      // document.body.prepend(elem);
 
-      elem.innerHTML = "<h1 style='font-size:32px;'>Game is loading..</h1>";
-
-      document.body.prepend(elem);
     }
     setTimeout(() => {
       ipcRenderer.sendSync("loadLogin", "");
